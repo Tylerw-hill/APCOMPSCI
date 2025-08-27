@@ -10,7 +10,8 @@ class Math {
 
     //We will be using System.out.println and System.out.print throughout the year. Try using both below to see what the difference is!
 
-
+    System.out.println("whats up dawg");
+    System.out.println("Potato");
 
 
 
@@ -64,6 +65,8 @@ class Math {
     //Create codes that will print the following:
 
     //Odd integers from 1 to 100, inclusive of both
+      System.out.println("");
+
     for (int i = 1; i <= 100; i++) {
             if (i % 2 != 0) { 
               System.out.println(i);
