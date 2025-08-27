@@ -12,6 +12,7 @@ class Math {
 
     System.out.println("whats up dawg");
     System.out.println("Potato");
+    System.out.print("wooohooooo");
 
 
 
