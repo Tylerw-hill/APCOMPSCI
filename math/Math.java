@@ -7,6 +7,10 @@ class Math {
     //Use the // to create single line comments to either add info or to take out code for debugging
 
     System.out.println("Hello world!");
+      //if (blank blank blank)
+          //blank blank
+       //else
+          //blank blank
 
     //We will be using System.out.println and System.out.print throughout the year. Try using both below to see what the difference is!
 
@@ -77,7 +81,6 @@ class Math {
     for (int a = 3; a <= 100; a += 3) {
             System.out.println(a);
     }
-
 
     //Starting at 1000, print on the same line (with a - [hypthen] between each) all of the numbers that end in 0 going down to 0
       for (int e = 1000; e >= 0; e -= 10) {
