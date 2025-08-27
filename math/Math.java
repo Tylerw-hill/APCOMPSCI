@@ -36,6 +36,20 @@ class Math {
 
     //Create 3 variables of each of the above types (USE GOOD CODING PRACTICE WHEN CREATING THE VARIABLES
 
+    //int apples = 12;
+    //int year = 2025;
+    //int temperature = -7;
+
+    //double height = 5.9;
+    //double price = 199.99;
+    //double gpa = 3.85;
+
+    //boolean isRaining = false;
+    //boolean hasLicense = true;
+    //boolean gameOver = false;
+
+    
+
 
 
 
@@ -50,14 +64,25 @@ class Math {
     //Create codes that will print the following:
 
     //Odd integers from 1 to 100, inclusive of both
-
-
+    for (int i = 1; i <= 100; i++) {
+            if (i % 2 != 0) { 
+              System.out.println(i);
+            }
 
     //All multiples of 3 from 1 to 100
-
-
+    for (int a = 3; a <= 100; a += 3) {
+            System.out.println(a);
+    }
 
 
     //Starting at 1000, print on the same line (with a - [hypthen] between each) all of the numbers that end in 0 going down to 0
+      for (int e = 1000; e >= 0; e -= 10) {
+            if (i > 0) {
+                System.out.print(e + "-");
+            } else {
+                System.out.print(e); 
+            }
   }
+}
+}
 }
