@@ -70,8 +70,6 @@ class Math {
     //Create codes that will print the following:
 
     //Odd integers from 1 to 100, inclusive of both
-      System.out.println("");
-
     for (int i = 1; i <= 100; i++) {
             if (i % 2 != 0) { 
               System.out.println(i);
