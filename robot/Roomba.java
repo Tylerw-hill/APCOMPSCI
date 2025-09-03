@@ -4,50 +4,63 @@ import kareltherobot.*;
 
 public class Roomba implements Directions {
 
-	// Main method to make this self-contained
-	public static void main(String[] args) {
-		// LEAVE THIS ALONE!!!!!!
-		String worldName = "robot/basicRoom.wld";
+    // Main method to make this self-contained
+    public static void main(String[] args) {
+        // LEAVE THIS ALONE!!!!!!
+        String worldName = "robot/basicRoom.wld";
 
-		Roomba cleaner = new Roomba();
-		int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
-		System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
+        Roomba cleaner = new Roomba();
+        int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
+        System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
+    }
 
-	}
+    // declared here so it is visible in all the methods!
+    private Robot roomba;
+    private int totalBeepers = 0; 
+    int i = 0;
 
-	// declared here so it is visible in all the methods!
-	private Robot roomba;
+    public int cleanRoom(String worldName, int startX, int startY) {
+        // Load world first
+        World.readWorld(worldName);
+        World.setVisible(true);
 
-	// You will need to add many variables!!
-	int totalBeepers = 0;
+        // assign to instance variable
+        roomba = new Robot(startX, startY, East, 80);
 
-	public int cleanRoom(String worldName, int startX, int startY) {
-		Robot roomba = new Robot(startX,startY,East,80);
-		// A new Robot should be constructed and assigned to the global (instance) variable named roomba that is declared above.
-        // Make sure it starts at startX and startY location.
+        // === your movement loop (fixed condition) ===
+        for (i = 0; i <= 2; i++) {   // was i >= 2 (never ran)
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.turnLeft();
+            roomba.move();
+            roomba.turnLeft();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.move();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.move();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+        }
 
-		World.readWorld(worldName);
-		World.setVisible(true);
+        // === fixed beeper picking loop ===
+        while (roomba.nextToABeeper()) {
+            roomba.pickBeeper();
+            totalBeepers++;
+        }
 
-
-		/** This section will have all the logic that takes the Robot to every location
-		 * and cleans up all piles of beepers. Think about ways you can break this
-		 * large, complex task into smaller, easier to solve problems.
-		 */
-		for(blah, blah, blah, blah){
-			roomba.move();
-			
-		}
-		while(totalBeepers >= 0){
-			while(roomba.nextToABeeper()){
-				roomba.pickBeeper();
-			}
-		}
-
-		// the line below causes a null pointer exception
-		// what is that and why are we getting it?
-		roomba.move();
-
-		return totalBeepers;
-	}
+        return totalBeepers;
+    }
 }
