@@ -21,14 +21,18 @@ public class Roomba implements Directions {
 
     public int cleanRoom(String worldName, int startX, int startY) {
 
+        //world settings
         World.readWorld(worldName);
         World.setVisible(true);
-		World.setDelay(10);
+		World.setDelay(1);
+        World.setSize(50,50);
 
         roomba = new Robot(startX, startY, South, 0);
         while(roomba.frontIsClear()){
             roomba.move();
         }
+        
+        
         roomba.turnLeft();
         roomba.turnLeft();
         roomba.turnLeft();
@@ -37,19 +41,10 @@ public class Roomba implements Directions {
         }
         roomba.turnLeft();
         roomba.turnLeft();
-
-            moveAndPick();
-            roomba.turnLeft();
-            moveOne();
-            roomba.turnLeft();
-            moveAndPick();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            moveOne();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            roomba.turnLeft();
+            
+        for (int i = 0; i < 23; i++) {
+            twoRows();
+        }
             
 
 
@@ -80,5 +75,19 @@ public class Roomba implements Directions {
                     totalBeepers++;
                 }
             }
+    }
+    private void twoRows() {
+            moveAndPick();
+            roomba.turnLeft();
+            moveOne();
+            roomba.turnLeft();
+            moveAndPick();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            moveOne();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
     }
 }
