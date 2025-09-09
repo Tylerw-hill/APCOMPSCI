@@ -7,10 +7,10 @@ public class Roomba implements Directions {
     // Main method to make this self-contained
     public static void main(String[] args) {
         // LEAVE THIS ALONE!!!!!!
-        String worldName = "robot/basicRoom.wld";
+        String worldName = "robot/TestWorld-2.wld";
 
         Roomba cleaner = new Roomba();
-        int totalBeepers = cleaner.cleanRoom(worldName, 7, 6);
+        int totalBeepers = cleaner.cleanRoom(worldName, 15, 15);
         System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
     }
 
@@ -25,48 +25,60 @@ public class Roomba implements Directions {
         World.setVisible(true);
 		World.setDelay(10);
 
-        roomba = new Robot(startX, startY, East, 80);
-
-        for (i = 0; i <= 2; i++) {
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            roomba.turnLeft();
-            moveAndPick();
-            roomba.turnLeft();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            moveAndPick();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            moveAndPick();
-            roomba.turnLeft();
-            roomba.turnLeft();
-            roomba.turnLeft();
+        roomba = new Robot(startX, startY, South, 0);
+        while(roomba.frontIsClear()){
+            roomba.move();
         }
+        roomba.turnLeft();
+        roomba.turnLeft();
+        roomba.turnLeft();
+        while(roomba.frontIsClear()){
+            roomba.move();
+        }
+        roomba.turnLeft();
+        roomba.turnLeft();
+
+            moveAndPick();
+            roomba.turnLeft();
+            moveOne();
+            roomba.turnLeft();
+            moveAndPick();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            moveOne();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            
 
 
         while (roomba.nextToABeeper()) {
             roomba.pickBeeper();
             totalBeepers++;
         }
+    
 
         return totalBeepers;
+    
     }
     private void moveAndPick() {
+        
+        while(roomba.frontIsClear()){
         roomba.move();
         while (roomba.nextToABeeper()) {
             roomba.pickBeeper();
             totalBeepers++;
+            }  
         }
+    }
+    private void moveOne() {
+         roomba.move();
+            if(roomba.nextToABeeper()){
+                while(roomba.nextToABeeper()){
+                    roomba.pickBeeper();
+                    totalBeepers++;
+                }
+            }
     }
 }
