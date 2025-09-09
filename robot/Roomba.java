@@ -32,7 +32,7 @@ public class Roomba implements Directions {
             roomba.move();
         }
         
-        
+        //calibration into the bottom left corner
         roomba.turnLeft();
         roomba.turnLeft();
         roomba.turnLeft();
@@ -41,19 +41,16 @@ public class Roomba implements Directions {
         }
         roomba.turnLeft();
         roomba.turnLeft();
-            
+        
+        //this is the part that holds all the movements stuff dont mess w this part that much 
         for (int i = 0; i < 23; i++) {
             twoRows();
         }
-            
-
-
         while (roomba.nextToABeeper()) {
             roomba.pickBeeper();
             totalBeepers++;
         }
-    
-
+        
         return totalBeepers;
     
     }
