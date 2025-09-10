@@ -1,3 +1,4 @@
+
 package robot;
 
 import kareltherobot.*;
@@ -40,9 +41,18 @@ public class Roomba implements Directions {
         }
         roomba.turnLeft();
         roomba.turnLeft();
-            
-        for (int i = 0; i < 23; i++) {
+
+        boolean hasMoreRows = true;
+        while (hasMoreRows) {
             twoRows();
+            // Check if there are more rows to cover
+            roomba.turnLeft();
+            roomba.turnLeft();
+            roomba.turnLeft();
+            if (!roomba.frontIsClear()) {
+                hasMoreRows = false;
+            }
+            roomba.turnLeft();
         }
 
         collectPile();
