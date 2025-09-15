@@ -1,4 +1,3 @@
-
 package robot;
 
 import kareltherobot.*;
@@ -11,12 +10,16 @@ public class Roomba implements Directions {
         Roomba cleaner = new Roomba();
         int totalBeepers = cleaner.cleanRoom(worldName, 15, 15);
         System.out.println("Roomba cleaned up a total of " + totalBeepers + " beepers.");
+        System.out.println("Area of the room is " + (totalArea) + " units");
+        System.out.println("The room is " + ((double)numberofPiles/totalArea)*100 + "% dirty");
         cleaner.biggestPile();
+
     }
 
     private Robot roomba;
     private int totalBeepers = 0; 
-    int i = 0;
+    static int totalArea = 0;
+    private static int numberofPiles = 0;
 
     private int maxPileCount = 0;
     private int maxPileStreet = -1;
@@ -57,32 +60,37 @@ public class Roomba implements Directions {
 
         collectPile();
 
-        return totalBeepers;
+        return totalBeepers;    
     }
 
     private void collectPile() {
-        int pileCount = 0;
-        while (roomba.nextToABeeper()) {
-            roomba.pickBeeper();
-            totalBeepers++;
-            pileCount++;
-        }
-        if (pileCount > maxPileCount) {
-            maxPileCount = pileCount;
-            maxPileStreet = roomba.street();
-            maxPileAvenue = roomba.avenue();
-        }
+    int pileCount = 0;
+    while (roomba.nextToABeeper()) {
+        roomba.pickBeeper();
+        totalBeepers++;
+        pileCount++;
     }
+    if (pileCount > 0) {
+        numberofPiles++; 
+    }
+    if (pileCount > maxPileCount) {
+        maxPileCount = pileCount;
+        maxPileStreet = roomba.street();
+        maxPileAvenue = roomba.avenue();
+    }
+}
 
     private void moveAndPick() {
         while(roomba.frontIsClear()){
             roomba.move();
+            totalArea++;
             collectPile();
         }
     }
 
     private void moveOne() {
         roomba.move();
+        totalArea++;
         collectPile();
     }
 
