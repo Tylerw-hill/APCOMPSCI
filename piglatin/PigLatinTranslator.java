@@ -1,5 +1,15 @@
+package piglatin;
+
 public class PigLatinTranslator {
-    private static final String VOWELS = "aeiou";
+    public static Book translate(Book input) {
+        Book translatedBook = new Book();
+
+        for (String line : input.getText().split("\n")) {
+            translatedBook.appendLine(translate(line));
+        }
+
+        return translatedBook;
+    }
 
     public static String translate(String input) {
         String[] words = input.split("\\s+");
@@ -13,17 +23,40 @@ public class PigLatinTranslator {
     }
 
     private static String translateWord(String word) {
-        if (word.isEmpty()) return "";
+        String VOWELS = "aeiouAEIOU";
+        String punctuation = "";
 
-        if (startsWithVowel(word)) {
-            return word + "way";
-        } else {
-            return word.substring(1) + word.charAt(0) + "ay";
+        
+        if (word.length() > 0 && !Character.isLetter(word.charAt(word.length() - 1))) {
+            punctuation = String.valueOf(word.charAt(word.length() - 1));
+            word = word.substring(0, word.length() - 1);
         }
-    }
 
-    private static boolean startsWithVowel(String word) {
-        String lowerCaseWord = word.toLowerCase();
-        return VOWELS.indexOf(lowerCaseWord.charAt(0)) != -1;
+        boolean wasCapitalized = Character.isUpperCase(word.charAt(0));
+
+        String result = "";
+        if (VOWELS.indexOf(Character.toLowerCase(word.charAt(0))) != -1) {
+            result = word + "ay";
+        } else {
+            int index = 0;
+            while (index < word.length() && VOWELS.indexOf(Character.toLowerCase(word.charAt(index))) == -1) {
+                index++;
+            }
+            if (index == word.length()) {
+                result = word + "ay";
+            } else {
+                result = word.substring(index) + word.substring(0, index) + "ay";
+            }
+        }
+
+        result += punctuation;
+
+        if (wasCapitalized) {
+            result = Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
+        } else {
+            result = result.toLowerCase();
+        }
+
+        return result;
     }
 }
