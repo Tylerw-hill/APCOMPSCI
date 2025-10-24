@@ -1,5 +1,7 @@
 package piglatin;
 
+import java.util.Scanner;
+
 public class PigLatinTranslator {
     public static Book translate(Book input) {
         Book translatedBook = new Book();
@@ -12,21 +14,23 @@ public class PigLatinTranslator {
     }
 
     public static String translate(String input) {
-        String[] words = input.split("\\s+");
+        Scanner scanner = new Scanner(input);
         StringBuilder result = new StringBuilder();
 
-        for (String word : words) {
-            result.append(translateWord(word)).append(" ");
+        while (scanner.hasNext()) {
+            result.append(translateWord(scanner.next())).append(" ");
         }
 
+        scanner.close();
         return result.toString().trim();
     }
+    
 
     private static String translateWord(String word) {
-        String VOWELS = "aeiouAEIOU";
+      
+        String VOWELS = "aeiouyAEIOUY";
         String punctuation = "";
 
-        
         if (word.length() > 0 && !Character.isLetter(word.charAt(word.length() - 1))) {
             punctuation = String.valueOf(word.charAt(word.length() - 1));
             word = word.substring(0, word.length() - 1);
@@ -56,7 +60,7 @@ public class PigLatinTranslator {
         } else {
             result = result.toLowerCase();
         }
-
+       
         return result;
     }
 }
