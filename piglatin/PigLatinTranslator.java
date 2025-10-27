@@ -1,39 +1,35 @@
 package piglatin;
-
-import java.util.Scanner;
-
 public class PigLatinTranslator {
-    public static Book translate(Book input) {
-        Book translatedBook = new Book();
-
-        for (String line : input.getText().split("\n")) {
-            translatedBook.appendLine(translate(line));
+    public static String translate(String input) {
+        if (input == null) {
+            return null;
         }
 
-        return translatedBook;
-    }
-
-    public static String translate(String input) {
-        Scanner scanner = new Scanner(input);
+        String[] words = input.split("\\s+");
         StringBuilder result = new StringBuilder();
 
-        while (scanner.hasNext()) {
-            result.append(translateWord(scanner.next())).append(" ");
+        for (String word : words) {
+            result.append(translateWord(word)).append(" ");
         }
 
-        scanner.close();
         return result.toString().trim();
     }
-    
 
     private static String translateWord(String word) {
-      
+        if (word == null) {
+            return null;
+        }
+
         String VOWELS = "aeiouyAEIOUY";
         String punctuation = "";
 
         if (word.length() > 0 && !Character.isLetter(word.charAt(word.length() - 1))) {
             punctuation = String.valueOf(word.charAt(word.length() - 1));
             word = word.substring(0, word.length() - 1);
+        }
+
+        if (word.isEmpty()) {
+            return punctuation;
         }
 
         boolean wasCapitalized = Character.isUpperCase(word.charAt(0));
@@ -55,12 +51,13 @@ public class PigLatinTranslator {
 
         result += punctuation;
 
-        if (wasCapitalized) {
-            result = Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
+        if (wasCapitalized && result.length() > punctuation.length()) {
+            result = Character.toUpperCase(result.charAt(punctuation.length())) + result.substring(punctuation.length() + 1).toLowerCase();
         } else {
             result = result.toLowerCase();
         }
-       
+
         return result;
     }
 }
+
