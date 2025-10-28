@@ -4,7 +4,7 @@ public class PigLatinTranslator {
         if (input == null) {
             return null;
         }
-
+//potato
         String[] words = input.split("\\s+");
         StringBuilder result = new StringBuilder();
 
