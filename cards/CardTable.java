@@ -14,7 +14,7 @@ public class CardTable {
     public void startPlaying()
     {
         deck.shuffle();
-
+        deck.shuffle();
         Scanner keyboard = new Scanner(System.in);
 
         Game game = new Game(deck);

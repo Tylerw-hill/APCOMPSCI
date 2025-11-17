@@ -1,157 +1,72 @@
 package cards;
 
 public class Game {
-
     private Deck deck;
-    private Hand player;
-    private Hand dealer;
+    private Hand hand;
+    private int score;
 
-    private int playersWins;
-    private int dealersWins;
-
-    public Game(Deck deck)
-    {
+    public Game(Deck deck) {
         this.deck = deck;
-        playersWins = 0;
-        dealersWins = 0;
+        this.hand = new Hand(5);
+        this.score = 0;
+        dealCards();
     }
 
-    public void printRules()
-    {
-        System.out.println(" --- Rules / How to play --- ");
-        System.out.println("s to stand, h to hit");
+    private void dealCards() {
+        for (int i = 0; i < 2; i++) {
+            hand.add(deck.draw());
+        }
     }
 
-    private void printState()
-    {
-        System.out.println("Player - Score: " + score(player) + " Hand: " + player.toString());
-        System.out.println("Dealer - Score: " + score(dealer) + " Hand: " + dealer.toString());
+    public void printRules() {
+        System.out.println("Welcome to Blackjack!");
+        System.out.println("Your hand is: " + hand);
+        System.out.println("Your score is: " + calculateScore());
     }
 
-    public void next()
-    {
-        player = new Hand(13);
-        dealer = new Hand(13);
-        deal();
+    public void next() {
+        System.out.println("Do you want to hit (h) or stand (s)?");
     }
 
-    public void deal()
-    {
-        Card card;
-        card = deck.draw();
-        player.add(card);
-
-        card = deck.draw();
-        dealer.add(card);
-
-        card = deck.draw();
-        player.add(card);
-
-        card = deck.draw();
-        dealer.add(card);
-
-        System.out.println("Player - Score: " + score(player) + " Hand: " + player.toString());
-        System.out.println("Dealer - Score: " + score(dealer) + " Hand: " + dealer.toString());
-
-    }
-
-    public boolean takeTurn(String action)
-    {
-        Boolean standing = false;
-        if (action.length() > 0)
-        {
-            // Player's Turn
-            String command = action.substring(0, 1);
-            if (command.equals("h"))
-            {
-                System.out.println("Hit");
-                Card card = deck.draw();
-                player.add(card);
-            }
-            else if (command.equals("s"))
-            {
-                System.out.println("Stand");
-                standing = true;
-            }
-
-            // Evaluate Player's Score
-            int playerScore = score(player);
-            if (playerScore == 21)
-            {
-                System.out.println("You win!");
-                playersWins++;
-                printState();
+    public boolean takeTurn(String command) {
+        if (command.equals("h")) {
+            hand.add(deck.draw());
+            System.out.println("Your hand is: " + hand);
+            System.out.println("Your score is: " + calculateScore());
+            if (calculateScore() > 21) {
+                System.out.println("You busted! Game over.");
                 return false;
             }
-            if (playerScore > 21)
-            {
-                System.out.println("BUST! You loose.");
-                dealersWins++;
-                printState();
-                return false;
-            }
-
-            // Dealer's Turn
-            if (score(dealer) < 17)
-            {
-                Card card = deck.draw();
-                dealer.add(card);
-            }
-
-            // Evaluate Dealer's Score
-            int dealerScore = score(dealer);
-            if (dealerScore == 21)
-            {
-                System.out.println("Dealer wins.");
-                dealersWins++;
-                printState();
-                return false;
-            }
-            if (dealerScore > 21)
-            {
-                System.out.println("You win! Dealer bust.");
-                playersWins++;
-                printState();
-                return false;
-            }
-
-            if ((score(dealer) >= 17) && standing)
-            {
-                System.out.println("Game done.");
-                if (score(player) > score(dealer))
-                {
-                    playersWins++;
-                    System.out.println("Player wins!");
-                }
-                else {
-                    dealersWins++;
-                    System.out.println("Player wins!");
-                }
-                printState();
-                return false;
-            }
-
-            printState();
-            return true;
+        } else if (command.equals("s")) {
+            System.out.println("You stood with a score of: " + calculateScore());
+            return false;
         }
         return true;
     }
 
-    private int score(Hand hand)
-    {
+    private int calculateScore() {
         int score = 0;
-        for (int i=0; i<hand.length(); i++)
-        {
+        for (int i = 0; i < hand.length(); i++) {
             Card card = hand.get(i);
-            int value = card.getValue() + 1;
-            if (value > 10)
-            {
-                value = 10;
+            if (card.toString().contains("A")) {
+                score += 11;
+            } else if (card.toString().contains("K") || card.toString().contains("Q") || card.toString().contains("J")) {
+                score += 10;
+            } else {
+                try {
+                    score += Integer.parseInt(card.toString().substring(1));
+                } catch (NumberFormatException e) {
+                    // Handle the exception
+                }
             }
-            // TODO: deal with aces
-            score += value;
+        }
+        // Adjust score if there's an Ace and score is over 21
+        for (int i = 0; i < hand.length(); i++) {
+            Card card = hand.get(i);
+            if (card.toString().contains("A") && score > 21) {
+                score -= 10;
+            }
         }
         return score;
     }
-
 }
