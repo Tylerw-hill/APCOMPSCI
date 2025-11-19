@@ -37,6 +37,7 @@ public class Game {
                 System.out.println("You busted! Game over.");
                 return false;
             }
+            
         } else if (command.equals("s")) {
             System.out.println("You stood with a score of: " + calculateScore());
             return false;
