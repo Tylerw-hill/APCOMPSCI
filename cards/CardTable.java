@@ -6,54 +6,51 @@ public class CardTable {
 
     Deck deck;
 
-    public CardTable()
-    {
+    public CardTable() {
         deck = new Deck();
     }
 
-    public void startPlaying()
-    {
+    public void startPlaying() {
         deck.shuffle();
         deck.shuffle();
         Scanner keyboard = new Scanner(System.in);
 
+        // Start initial game
         Game game = new Game(deck);
-
         game.printRules();
         game.next();
 
-        String input = " ";
-        Boolean play = true;
-        while (play)
-        {
-            // Get input
-            System.out.println("Enter a command: (q to quit)");
+        String input;
+        boolean play = true;
+
+        while (play) {
+
+            System.out.println("Enter a command: (h=hit, s=stand, r=reset, q=quit)");
             input = keyboard.nextLine();
 
-            // Check for exit condition
-            if (input.length() > 0)
-            {
+            if (input.length() > 0) {
                 String command = input.substring(0, 1);
-                if (command.equals("q"))
-                {
+
+                if (command.equals("q")) {
                     play = false;
                     continue;
                 }
-                else if (command.equals("r")) {
-                    // Reset
-                    game = new Game(deck);
+
+                if (command.equals("r")) {
+                    game = new Game(deck);  // deals new hand
+                    System.out.println("\n--- New Round Started ---");
+                    game.printRules();      // show cards
+                    game.next();            // start prompt ONLY
+                    continue;
                 }
-                else {
-                    // Play on!
-                    boolean result = game.takeTurn(command);
-                    if (result == false)
-                    {
-                        System.out.println("\n");
-                        game.next();
-                    }
+
+                boolean result = game.takeTurn(command);
+
+                if (!result) {
+                    System.out.println("Round over. Press 'r' for a new round.");
                 }
             }
         }
         keyboard.close();
-   }
+    }
 }
