@@ -1,38 +1,40 @@
 package cards;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Hand {
-    private List<Card> cards;
-    private int maxSize;
+    private Card[] cards;
+    private int numCards;
 
     public Hand(int maxSize) {
-        this.maxSize = maxSize;
-        cards = new ArrayList<>();
+        cards = new Card[maxSize];
+        numCards = 0;
     }
 
-    public boolean add(Card card) {
-        if (cards.size() >= maxSize) {
-            return false;
+    public void add(Card card) {
+        if (numCards < cards.length) {
+            cards[numCards++] = card;
         }
-        cards.add(card);
-        return true;
     }
 
     public int length() {
-        return cards.size();
+        return numCards;
     }
 
     public Card get(int index) {
-        if (index >= 0 && index < cards.size()) {
-            return cards.get(index);
+        if (index >= 0 && index < numCards) {
+            return cards[index];
         }
         return null;
     }
 
     public Card remove(int index) {
-        if (index >= 0 && index < cards.size()) {
-            return cards.remove(index);
+        if (index >= 0 && index < numCards) {
+            Card removed = cards[index];
+            for (int i = index; i < numCards - 1; i++) {
+                cards[i] = cards[i + 1];
+            }
+            cards[numCards - 1] = null;
+            numCards--;
+            return removed;
         }
         return null;
     }
@@ -40,9 +42,12 @@ public class Hand {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Card card : cards) {
-            sb.append(card).append(" ");
+        for (int i = 0; i < numCards; i++) {
+            sb.append(cards[i]);
+            if (i < numCards - 1) {
+                sb.append(" ");
+            }
         }
-        return sb.toString().trim();
+        return sb.toString();
     }
 }
