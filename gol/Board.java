@@ -1,6 +1,6 @@
 package gol;
 
-interface Board {
+public interface Board {
 
     // Run the simulation for a given number of turns
     public void run(int turns);
@@ -17,4 +17,3 @@ interface Board {
     // Get the internal storage array (for testing)
     public int[][] get();
 }
-//commit
