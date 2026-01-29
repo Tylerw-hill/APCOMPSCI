@@ -12,6 +12,9 @@ public class SelectionSort implements Sorter {
                     smallest = v;
                 }
            }
+           int temp = input[smallest];
+           input[smallest] = input[i];
+           input[i] = temp;
         }
     }
 }
