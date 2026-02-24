@@ -3,6 +3,7 @@ package polygon;
 import java.awt.geom.*; // for Point2D.Double
 import java.util.ArrayList; // for ArrayList
 import gpdraw.*; // for DrawingTool
+import java.lang.Math;
 
 public class IrregularPolygon {
     private ArrayList<Point2D.Double> myPolygon = new ArrayList<Point2D.Double>();
@@ -13,11 +14,14 @@ public class IrregularPolygon {
     // public methods
     public void add(Point2D.Double aPoint)
     {
-        // TODO: Add a point to the IrregularPolygon.
+        myPolygon.add(aPoint);
+        
     }
 
     public double perimeter() {
-        // TODO: Calculate the perimeter.
+        
+        
+
         return 3.14;
     }
 //
