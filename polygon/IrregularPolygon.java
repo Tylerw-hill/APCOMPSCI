@@ -46,10 +46,10 @@ public class IrregularPolygon {
 //
 
     public double area() {
-        // TODO: Calculate the area.
+   
         Double area = 0.0;
         if (myPolygon.size() < 3)
-            return 0.0
+            return 0.0;
         for(int i = 0; i < myPolygon.size(); i++){
             Point2D.Double current = myPolygon.get(i);
             Point2D.Double next;
@@ -60,7 +60,7 @@ public class IrregularPolygon {
         area += (current.getX() * next.getY()) - (current.getY() * next.getX());
         }
         area = Math.abs(area/2.0);
-        
+
         return area;
     }
 
@@ -68,10 +68,19 @@ public class IrregularPolygon {
     {
         // Wrap the DrawingTool in a try/catch to allow development without need for graphics.
         try {
-            // TODO: Draw the polygon.
-            // Documents: https://pavao.org/compsci/gpdraw/html/gpdraw/DrawingTool.html
-            //DrawingTool myDrawingTool = new DrawingTool(new SketchPad(500, 500));
-            //myDrawingTool.move(50, 50);
+            if(myPolygon.size() < 2){
+                System.out.println("can't draw, must have more than 1 point");
+                return;
+            }
+        DrawingTool myDrawingTool = new DrawingTool(new SketchPad(600,600));
+        
+        myDrawingTool.up();
+        myDrawingTool.move(myPolygon.get(0).getX(), myPolygon.get(0).getY());
+        myDrawingTool.down();
+        for(int i = 1; i < myPolygon.size(); i++){
+            myDrawingTool.move(myPolygon.get(i).getX(), myPolygon.get(i).getY());
+        }
+        myDrawingTool.move(myPolygon.get(0).getX(), myPolygon.get(0).getY());
         } catch (java.awt.HeadlessException e) {
             System.out.println("Exception: No graphics support available.");
         }
