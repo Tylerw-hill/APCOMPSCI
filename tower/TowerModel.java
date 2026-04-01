@@ -48,8 +48,21 @@ public class TowerModel {
     // Move one disk from the source stack to the destination stack.
     public void move(int source, int destination)
     {
-        System.out.println("Move #" + ++moveCounter + " from " + source + " to " + destination);
+        IntegerStack src = towers[source];
+        IntegerStack dest = towers[destination];
+
+        if(src.isEmpty()) {
+            System.out.println("Move #" + ++moveCounter + " from " + source + " to " + destination);
         // TODO!!
+        }
+        int disk = src.peek();
+
+        if(!dest.isEmpty() && dest.peek() < disk) {
+            System.out.println("Move #" + ++moveCounter + " from " + source + " to " + destination + " FAILED: illegal move");
+            return;
+        }
+        src.pop();
+        dest.push(disk);
     }
 
     // Helper method to nicely print the current model state.
