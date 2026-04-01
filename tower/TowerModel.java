@@ -63,6 +63,8 @@ public class TowerModel {
         }
         src.pop();
         dest.push(disk);
+
+        System.out.println("move #" + ++moveCounter + " from " + source + "to" + destination)
     }
 
     // Helper method to nicely print the current model state.

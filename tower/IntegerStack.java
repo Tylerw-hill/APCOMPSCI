@@ -43,6 +43,11 @@ public class IntegerStack {
         }
     }
 
+    public boolean isEmpty()
+{
+    return depth == 0;
+}
+
     // Debug function for printing
     public int get(int index)
     {
